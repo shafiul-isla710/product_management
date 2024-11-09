@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
+    //show all products
     function productList(){
 
         $search = request()->query('search');
@@ -22,11 +23,16 @@ class ProductController extends Controller
     }
 
 
+
+ //create product
     public function create(Request $request){
 
         return view('page.create');
     }
 
+
+
+//store product on database table
     public function store(Request $request){
         $request->validate([
             'product_id'=>'required|unique:products',
@@ -49,6 +55,10 @@ class ProductController extends Controller
         return redirect()->route('input.route')->with('success','Product created successfully');
     }
 
+
+
+    //edit page
+
     function edit(Request $request){
 
         $get = Product::findOrFail($request->id);
@@ -56,9 +66,12 @@ class ProductController extends Controller
         return view('page.edit',['data'=>$get]);
     }
 
+
+
+
+    //This function or update data
+
     public function updateData(Request $request,$id){
-
-
 
         $update = Product::findOrFail($id);
 
@@ -80,11 +93,11 @@ class ProductController extends Controller
 
         return redirect()->route('product.route')->with('update','Product updated successfully');
 
-
-
     }
 
 
+
+    //Delete data from products table
 
         public function destroy($id)
         {
